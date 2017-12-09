@@ -45,7 +45,7 @@ deps:
 	@go get github.com/kardianos/govendor
 	@govendor sync
 
-dev: deps ## Build and install a development build
+dev: #deps ## Build and install a development build
 	@grep 'const VersionPrerelease = ""' version/version.go > /dev/null ; if [ $$? -eq 0 ]; then \
 		echo "ERROR: You must add prerelease tags to version/version.go prior to making a dev build."; \
 		exit 1; \
@@ -71,11 +71,11 @@ fmt-examples:
 
 # generate runs `go generate` to build the dynamically generated
 # source files.
-generate: deps ## Generate dynamically generated code
+generate: #deps ## Generate dynamically generated code
 	go generate .
 	gofmt -w command/plugin.go
 
-test: deps fmt-check ## Run unit tests
+test: fmt-check #deps fmt-check ## Run unit tests
 	@go test $(TEST) $(TESTARGS) -timeout=2m
 	@go tool vet $(VET)  ; if [ $$? -eq 1 ]; then \
 		echo "ERROR: Vet found problems in the code."; \
